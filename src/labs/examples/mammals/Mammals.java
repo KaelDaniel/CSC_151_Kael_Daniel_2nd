@@ -84,4 +84,6 @@ public class Mammals {
             System.out.println("Bark Bark");
         } // checks the mammals name, and if it is a dog, then it will bark
     }
+
+    public void run(){}
 }    
