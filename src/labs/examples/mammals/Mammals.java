@@ -8,30 +8,15 @@ public class Mammals {
     protected String hairColor;
     protected String bodyTemp;
     protected String name;
+    protected String lifeSpan;
     protected String habitat;
-    protected String species;
-    protected String diet;
+    protected String Catagory;
+    protected String feed;
 
 
 
 
-// list of comands, and actions
-    public void run(){
-        int lineX = (3); // sets the lines up, down 3 right 4
-        int lineY = (4);
-
-        System.out.println("the Mammal walked 3 miles south, and 4 miles east");
-
-        double lineZ = (lineX*lineX + lineY*lineY); // gets the C^2
-        double Pythagorean = Math.sqrt(lineZ); // finds the squreroot of C^2
-
-        System.out.println("the Mammal walked " + Pythagorean + "miles back to the begining");
-        
-        double Theta = Math.atan2(lineX,lineY); // finds the theta
-        double ThetaAngle = Math.toDegrees(Theta); // turns the theta into a degree
-        
-        System.out.println(ThetaAngle); //gives the final angle
-    }
+// a list, one of many
 
     public void claws(){}
 
@@ -74,15 +59,27 @@ public class Mammals {
 
     public void getMammalDetails(){
         System.out.println(this.eyeColor);
+
+        System.out.println(this.hairColor);
+
+        System.out.println(this.bodyTemp);
+
+        System.out.println(this.lifeSpan);
+
+        System.out.println(this.habitat);
+
+        System.out.println(this.Catagory);
+
+        System.out.println(this.feed);
     } //used to print out the mammals details
 
     public void stand(){
     System.out.println("Stand up"); // states that the mammal is standing
-    mammalSound(); // and then calls out the mammalSound command
+    mammalSpeak(); // and then calls out the mammalSound command
     }
 
    
-    public void mammalSound(){
+    public void mammalSpeak(){
         if("dog".equals(name)){
             System.out.println("Bark Bark");
         } // checks the mammals name, and if it is a dog, then it will bark

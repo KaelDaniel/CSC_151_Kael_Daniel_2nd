@@ -2,13 +2,13 @@ package labs.examples.mammals;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        Mammals mammal = new Mammals();
+        Mammals mammal = new Mammals(); //makes a new mammal instance/object, to many names gonna be honesy
 
-        mammal.setName("dog"); //sats the mammals name to "dog"
-        String myMammalName = mammal.getName(); // line 10 and 11 pretty much assign the name "dog", and then prints the name
+        mammal.setName("dog"); //the mammal is named as a dog, so, it's a dog now
+
+        String myMammalName = mammal.getName(); // gives the mamal a name, and then calls it by its name, so we know it is a good dog
         System.out.println(myMammalName);
 
-        mammal.sit(); // begins the sit command
-        mammal.run(); // begins the run command
+        mammal.sit(); // dog shal... SIT
     }
 }
