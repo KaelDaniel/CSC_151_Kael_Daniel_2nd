@@ -2,8 +2,8 @@ package labs.examples.mammals;
 
 public class Mammals {
 
-// javac -d bin src/labs/example/mammals/*.java (kael use this for debugging, probably gonna use it a lot)
-// these are the list of traits so far
+// javac -d bin src/labs/example/mammals/*.java (kael use this for debugging, probably gonna use it a lot)(future Kael here, Yeah I am, becuase PAIN)
+// list, one of many
     protected String eyeColor;
     protected String hairColor;
     protected String bodyTemp;
@@ -16,7 +16,7 @@ public class Mammals {
 
 
 
-// a list, one of many
+// a list, another of MANY
 
     public void claws(){}
 
@@ -51,11 +51,11 @@ public class Mammals {
     
     public void setName(String name){
         this.name = name;
-    } //is used to set a mammals name for future use
+    } //name is set for later
 
     public String getName(){
         return this.name;
-    } // this returns whatever the name of the mammal is set too
+    } // and then used
 
     public void getMammalDetails(){
         System.out.println(this.eyeColor);
@@ -71,18 +71,18 @@ public class Mammals {
         System.out.println(this.Catagory);
 
         System.out.println(this.feed);
-    } //used to print out the mammals details
+    } //used to print out the mammals details, and it is amany a details
 
     public void stand(){
-    System.out.println("Stand up"); // states that the mammal is standing
-    mammalSpeak(); // and then calls out the mammalSound command
+    System.out.println("Stand up"); // the animal stands up, I guess
+    mammalSpeak(); // and then Speaks
     }
 
    
     public void mammalSpeak(){
         if("dog".equals(name)){
             System.out.println("Bark Bark");
-        } // checks the mammals name, and if it is a dog, then it will bark
+        } // dogs bark, cats meow, and so on so forth, but only got barks for now
     }
 
     public void run(){}
