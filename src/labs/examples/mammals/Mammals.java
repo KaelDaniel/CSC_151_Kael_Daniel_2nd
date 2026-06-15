@@ -1,6 +1,6 @@
-package labs.example.mammals;
+package labs.examples.mammals;
 
-public class mammals {
+public class Mammals {
 
 // javac -d bin src/labs/example/mammals/*.java (kael use this for debugging, probably gonna use it a lot)
 // these are the list of traits so far
@@ -19,16 +19,21 @@ public class mammals {
     public void run(){
         int lineX = (3); // sets the lines up, down 3 right 4
         int lineY = (4);
+
         System.out.println("the Mammal walked 3 miles south, and 4 miles east");
+
         double lineZ = (lineX*lineX + lineY*lineY); // gets the C^2
         double Pythagorean = Math.sqrt(lineZ); // finds the squreroot of C^2
+
         System.out.println("the Mammal walked " + Pythagorean + "miles back to the begining");
+        
         double Theta = Math.atan2(lineX,lineY); // finds the theta
         double ThetaAngle = Math.toDegrees(Theta); // turns the theta into a degree
-        System.out.println(ThetaAngle); //prints out the final result
+        
+        System.out.println(ThetaAngle); //gives the final angle
     }
 
-    public void scratch(){}
+    public void claws(){}
 
     public void eat(){}
 
@@ -37,15 +42,26 @@ public class mammals {
     
     public void sit() throws InterruptedException{
         if("water".equals(habitat)){
-            System.out.println("amphibious mammals cannot sit");} // checks if the mammal lives in water, and if it does, then it can't sit
+            System.out.println("amphibious mammals cannot sit");} // if it is water living loser, then it won't sit, so yeah... FISH
+
         else{
-            System.out.println("sit down"); // if th animal can sit, the animal will sit
-            Thread.sleep(15000); // this will make it so the code waits 15 seconds before continueing the command
-            stand(); //begins the stand command
+            System.out.println("sit down"); // if it fits it sits, i guess
+
+            Thread.sleep(15000); // thread waiting function, with it being in milliseconds, so 15 seconds
+
+            stand(); // standing command, duh duh dun
         }
     } // InterruptedExpectation is needed since without it, the Thread.sleep code wouldn't work, and would cuase conflictions
 
-    public void swim(){}
+    public void swim(){
+        if("water".equals(habitat)){
+            System.out.println("the mammal is swimming"); //a function that allows a animal to swim if it is aquatic by nature
+        }
+        else{
+            System.out.println("the mammal cannot swim"); //simply if it can't swim then it won'd
+
+        }
+    }
 
     
     public void setName(String name){
