@@ -1,4 +1,4 @@
-package labs.examples.Arrays;
+package labs.examples.arrays;
 
 import java.util.Scanner;
 
@@ -27,6 +27,7 @@ public class Arrays {
     public static int[] FirstArray() {
         Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Enter size of first array: ");
         int x = scanner.nextInt();
 
         int[] numbers = new int[x];
@@ -41,6 +42,7 @@ public class Arrays {
     public static int[] SecondArray() {
         Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Enter size of second array: ");
         int y = scanner.nextInt();
 
         int[] numbers2 = new int[y];
