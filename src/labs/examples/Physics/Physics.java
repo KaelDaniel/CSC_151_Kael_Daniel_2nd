@@ -1,4 +1,4 @@
-package labs.example.Physics;
+package labs.examples.Physics;
 
 import java.lang.Math;
 
