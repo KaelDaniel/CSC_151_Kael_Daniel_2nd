@@ -15,6 +15,9 @@ public class Logger {
         BufferedReader reader = openErrorLog();
         countErrors(reader);
         reader.close();
+        BufferedReader file2 = openErrorLog();
+        getMemoryLimitExceededCount(file2);
+        file2.close();
     }
 
     public static BufferedReader openErrorLog() throws FileNotFoundException, IOException {
@@ -44,5 +47,30 @@ public class Logger {
         System.out.println("[ERROR]: " + counts[0]);
         System.out.println("[WARN]: " + counts[1]);
         System.out.println("[INFO]: " + counts[2]);
+    }
+    public static void getMemoryLimitExceededCount(BufferedReader file2) {
+        int memory_Limit = 0;
+        String error_Line = "";
+
+        try {            
+            
+            while ((error_Line = file2.readLine()) != null) {
+                if (error_Line.indexOf("Memory limit exceeded") >= 0) {
+                    memory_Limit++;
+                    int endpointStart = error_Line.indexOf("Endpoint:");
+                    System.out.println("Memory Limit Exceeded Count: " + memory_Limit + " | Endpoint: ");
+                    if (endpointStart >= 0) {
+                        String endpoint = error_Line.substring(endpointStart + 10).trim();
+                        
+                        System.out.println(endpoint);
+                    }
+                }
+            }
+
+
+            file2.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
