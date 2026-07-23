@@ -10,6 +10,7 @@ public class Logger {
 
     private static final String File_Path = "C:\\Users\\Kael\\CSC_151_Kael_Daniel_2nd\\src\\labs\\examples\\ArrayOptions\\Files\\"; // sets up the file path way for the program to follow with line 12 as a continuation for the api_error.log file.
     private static final String Error_Logger_File = File_Path + "api_error.log";
+    private static final String Http_Logger_File = File_Path + "http_access.log";
 
     public static void main(String[] args) throws FileNotFoundException, IOException { //runs the methods and closes the file after each method is over to not cuase problems in the future.
         BufferedReader reader = openErrorLog();
@@ -18,6 +19,9 @@ public class Logger {
         BufferedReader file2 = openErrorLog();
         getMemoryLimitExceededCount(file2);
         file2.close();
+        BufferedReader file3 = openErrorLog();
+        getDiskSpaceErrors(file3);
+        file3.close();
     }
 
     public static BufferedReader openErrorLog() throws FileNotFoundException, IOException { //opens the file without a argument, and returns the buffered reader for future use
@@ -51,7 +55,7 @@ public class Logger {
         System.out.println("[INFO]: " + counts[2]);
         System.out.println("[DEBUG]: " + counts[3]);
     }
-    public static void getMemoryLimitExceededCount(BufferedReader file2) {
+    public static void getMemoryLimitExceededCount(BufferedReader file2) { //this is meant to get the endpoints
         int memory_Limit = 0; //a memory limit counter
         String error_Line = "";
 
@@ -73,5 +77,33 @@ public class Logger {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static void getDiskSpaceErrors(BufferedReader file3) { // this is meant to get the api addresses
+        int memory_Limit = 0; //a memory limit counter
+        String error_Line = "";
+        int lineNumber = 0; //used to record which line the errors apear on
+
+        try {
+            while ((error_Line = file3.readLine()) != null) { //reads each line
+                lineNumber++; // keeps track of the line number for the errors
+                if (error_Line.indexOf("Disk space") >= 0) { //checks for the words "disk space"
+                    memory_Limit++; //and then adds it to the counts
+                    String[] parts = error_Line.split(" "); //this splits the lines to make it easier to find the ip address
+                    String apiAddress = "Not found";
+                    if (parts.length > 2) {
+                        apiAddress = parts[3]; //the IP address is the fourth part in each line
+                    }
+                    System.out.println("Disk Space Errors Count: " + memory_Limit + " | API Address: " + apiAddress + " | Line: " + lineNumber); // prints out the number of errors, the addresses, and the lines they apear on
+                }
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static BufferedReader openErrorLog(BufferedReader HTTP_Access) throws FileNotFoundException { //just an overloaded version of the first one
+        File HTTP_Access1 = new File(Http_Logger_File); 
+        return new BufferedReader(new FileReader(HTTP_Access1)); 
     }
 }
