@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Logger {
 
@@ -22,6 +24,18 @@ public class Logger {
         BufferedReader file3 = openErrorLog();
         getDiskSpaceErrors(file3);
         file3.close();
+        BufferedReader file4 = openErrorLog(Http_Logger_File); //opens the http_access.log file
+        getGMTOffset(file4);
+        file4.close();
+        BufferedReader file5 = openErrorLog(Http_Logger_File); //opens the http_access.log file again for the last method
+        getHTTPCodes(file5);
+        file5.close();
+        BufferedReader file6 = openErrorLog(Http_Logger_File); //opens the http_access.log file again for the last method
+        getResponseSize(file6);
+        file6.close();
+        BufferedReader file7 = openErrorLog(Http_Logger_File); //opens the http_access.log file again for the last method
+        groupHTTPMethodsAndEndPoints(file7);
+        file7.close();
     }
 
     public static BufferedReader openErrorLog() throws FileNotFoundException, IOException { //opens the file without a argument, and returns the buffered reader for future use
@@ -102,8 +116,94 @@ public class Logger {
             e.printStackTrace();
         }
     }
-    private static BufferedReader openErrorLog(BufferedReader HTTP_Access) throws FileNotFoundException { //just an overloaded version of the first one
-        File HTTP_Access1 = new File(Http_Logger_File); 
-        return new BufferedReader(new FileReader(HTTP_Access1)); 
+    private static BufferedReader openErrorLog(String filePath) throws FileNotFoundException { //just an overloaded version of the first one
+        File file = new File(filePath);
+        return new BufferedReader(new FileReader(file));
+    }
+
+    public static void getGMTOffset(BufferedReader File4) { //this is meant to get the GMT offset from the http_access.log file
+        String error_line;
+        int positive = 0; //counters
+        int negative = 0;
+        try {
+            while ((error_line = File4.readLine()) != null) {
+                if (error_line.contains("+0000")) { //counts the positives
+                    positive++;
+                } else if (error_line.contains("-0500")) { //and this one counts the negatives
+                    negative++;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Positive GMOffset count: " + positive); //this one is really simple, and hard to think about how to make it different from last time
+        System.out.println("Negative GMOffset count: " + negative);
+    }
+        private static void getHTTPCodes(BufferedReader file) {
+        String error_Line;
+        int count2xx = 0; //counters for the different types of errors
+        int count3xx = 0;
+        int count5xx = 0;
+        int totalLines = 0;
+
+        try {
+            while ((error_Line = file.readLine()) != null) {
+                totalLines++;
+                String[] parts = error_Line.split(" "); // cuts the lines into parts for easier searching 
+
+                for (String part : parts) { // checks each line to see if it has the deired error codes, and adds to the counts if it does
+                    if (part.matches("2\\d\\d")) {
+                        count2xx++;
+                    } else if (part.matches("3\\d\\d")) {
+                        count3xx++;
+                    } else if (part.matches("5\\d\\d")) {
+                        count5xx++;
+                    }
+                }
+            }
+
+            System.out.println("2xx Errors: " + count2xx); // prints everything out
+            System.out.println("3xx Errors: " + count3xx);
+            System.out.println("5xx Errors: " + count5xx);
+            System.out.println("Total lines read: " + totalLines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    static void getResponseSize(BufferedReader file){
+    String error_Line;
+    int linesUnder3900 = 0; // Counter for response sizes under 3900
+    try{
+        while ((error_Line = file.readLine()) != null){
+            String[] responseParts = error_Line.split(" "); // splits the lines for searching
+            if (responseParts.length > 9) { // checks if the line has enough parts
+                int value = Integer.parseInt(responseParts[9]); // gets the response size from the 10th part of the line
+                if (value < 3900) {
+                    linesUnder3900++;
+                }
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    System.out.println("Lines with response size under 3900: " + linesUnder3900); //so this one is also really simple, and hard to change without breaking it
+    }
+    static void groupHTTPMethodsAndEndPoints(BufferedReader file){
+    String error_Line;
+    Set<String> methods = new HashSet<>(); // Set to store unique HTTP methods
+    try{
+        while ((error_Line = file.readLine()) != null){
+            String[] parts = error_Line.split(" "); // Split the line by spaces to isolate the HTTP method
+            if (parts.length > 5) {
+                methods.add(parts[5]); // adds the HTTP method to the set once
+            }
+        }
+        System.err.println("HTTP Methods:");
+        for (String method : methods) {
+            System.err.println(method); // Print out each unique method
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 }
